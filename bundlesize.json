@@ -1,5 +1,5 @@
 {
-  "bundlesize": [
+  "files": [
     {
       "path": "./dist/**/*.js",
       "maxSize": "100 kB"

@@ -28,13 +28,26 @@ jobs:
       - name: Сборка проекта
         run: npm run build
 
-      - name: Установка bundlesize
-        run: npm install -g bundlesize
+      - name: Установка и настройка bundlesize
+        run: |
+          npm install -g bundlesize
+          cat > bundlesize.json << 'EOL'
+          {
+            "files": [
+              {
+                "path": "./dist/**/*.js",
+                "maxSize": "100 kB"
+              },
+              {
+                "path": "./dist/**/*.css",
+                "maxSize": "20 kB"
+              }
+            ]
+          }
+          EOL
 
       - name: Анализ размера бандла
-        run: |
-          echo '{"bundlesize":[{"path":"./dist/**/*.js","maxSize":"100 kB"}]}' > bundlesize.json
-          bundlesize
+        run: bundlesize
 
       - name: Установка и настройка Lighthouse CI
         run: |
