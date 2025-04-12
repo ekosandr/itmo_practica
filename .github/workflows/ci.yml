@@ -42,7 +42,23 @@ jobs:
       - name: Установка и настройка Lighthouse CI
         run: |
           npm install -g @lhci/cli@0.11.x
-          echo 'module.exports = {ci: {collect: {url: ["http://localhost:3000"], startServerCommand: "npm run preview", numberOfRuns: 1}, upload: {target: "temporary-public-storage"}}}' > lighthouserc.js
+          cat > lighthouserc.cjs << 'EOL'
+          module.exports = {
+            ci: {
+              collect: {
+                url: ["http://localhost:3000"],
+                startServerCommand: "npm run preview",
+                numberOfRuns: 1,
+              },
+              upload: {
+                target: "temporary-public-storage",
+              },
+              assert: {
+                preset: "lighthouse:recommended",
+              },
+            },
+          };
+          EOL
 
       - name: Запуск Lighthouse CI
         run: lhci autorun || true
