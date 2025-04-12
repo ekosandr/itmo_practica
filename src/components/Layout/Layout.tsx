@@ -3,10 +3,9 @@ import styles from "./Layout.module.css";
 
 interface LayoutProps {
   children: ReactNode;
-  title?: string;
 }
 
-export const Layout = ({ children, title = "Моё приложение" }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>

@@ -11,7 +11,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Layout title="Главная страница">
+      <Layout>
         <MainPage />
       </Layout>
     ),
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   {
     path: "/:id",
     element: (
-      <Layout title="Детальная страница">
+      <Layout>
         <DetailPage />
       </Layout>
     ),
