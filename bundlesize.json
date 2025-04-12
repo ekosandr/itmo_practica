@@ -1,0 +1,12 @@
+{
+  "bundlesize": [
+    {
+      "path": "./dist/**/*.js",
+      "maxSize": "100 kB"
+    },
+    {
+      "path": "./dist/**/*.css",
+      "maxSize": "20 kB"
+    }
+  ]
+}
