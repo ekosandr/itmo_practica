@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -64,3 +64,37 @@ jobs:
 
       - name: Проверка безопасности зависимостей
         run: npm audit || true
+
+      # Сохраняем артефакты сборки для использования в job deploy
+      - name: Сохранение артефактов сборки
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+
+  # Новый job для деплоя на Netlify
+  deploy:
+    # Запускаем только при push в main, не для pull request
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build # Ждем завершения job build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Загружаем артефакты сборки из предыдущего job
+      - name: Загрузка артефактов сборки
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+
+      # Деплой на Netlify
+      - name: Деплой на Netlify
+        uses: netlify/actions/cli@master
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        with:
+          args: deploy --dir=dist --prod
+          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
