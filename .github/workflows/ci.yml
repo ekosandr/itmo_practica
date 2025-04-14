@@ -46,8 +46,7 @@ jobs:
           module.exports = {
             ci: {
               collect: {
-                url: ["http://localhost:3000"],
-                startServerCommand: "npm run preview",
+                staticDistDir: "./dist",
                 numberOfRuns: 1,
               },
               upload: {

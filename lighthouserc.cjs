@@ -1,10 +1,8 @@
 module.exports = {
   ci: {
     collect: {
-      // URL для проверки (можно заменить на ваш локальный сервер)
-      url: ["http://localhost:3000"],
-      // Команда для запуска сервера (используйте команду из вашего package.json)
-      startServerCommand: "npm run preview",
+      // Используем статические файлы вместо запуска сервера
+      staticDistDir: "./dist",
       // Количество запусков для получения стабильных результатов
       numberOfRuns: 1,
     },
